@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .yarn
+
+.env
+.env.development
+.env.local
