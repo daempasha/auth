@@ -6,6 +6,6 @@ app.use(cors())
 
 app.get("/", (req, res) => { res.send("Hello") })
 
-app.listen(8000, () => {
+app.listen(3000, () => {
     console.log("app started")
 })
