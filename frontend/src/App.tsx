@@ -4,6 +4,8 @@ import FormItem from "@components/FormItem"
 import FormLabel from "@components/FormLabel"
 import Input from "@components/Input"
 import { useForm } from "react-hook-form"
+import "@firebase"
+
 
 function App() {
   const { register } = useForm();
