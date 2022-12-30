@@ -7,13 +7,12 @@ import { FieldValues, useForm } from "react-hook-form";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { app } from "@firebase";
 import { ErrorMessage } from "@components/ErrorMessage";
+import { toast } from "react-hot-toast"
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (values: FieldValues) => {
         const { email, password } = values;
-
-        console.log("amde it")
 
         const auth = getAuth(app)
 
@@ -26,6 +25,7 @@ const Login = () => {
                 const errorCode = error.code;
                 const errorMessage = error.message
                 console.log(error);
+                toast.error(errorCode)
             })
     }
 
