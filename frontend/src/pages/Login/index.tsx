@@ -4,29 +4,40 @@ import FormItem from "@components/FormItem";
 import FormLabel from "@components/FormLabel";
 import Input from "@components/Input";
 import { FieldValues, useForm } from "react-hook-form";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { app } from "@firebase";
 import { ErrorMessage } from "@components/ErrorMessage";
 import { toast } from "react-hot-toast"
-import { Link } from "react-router-dom";
-const Register = () => {
+import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "@hooks";
+import { AuthState } from "@enums";
+import { useEffect } from "react";
+
+const Login = () => {
+    const navigate = useNavigate();
+    const { authState } = useUser();
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+
+    useEffect(() => {
+        if (authState === AuthState.SIGNED_IN) {
+            navigate("/")
+        }
+    }, [authState])
 
     const onSubmit = (values: FieldValues) => {
         const { email, password } = values;
 
         const auth = getAuth(app)
 
-        createUserWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(userCredential)
+                toast.success("Successfully logged in!")
+                navigate("/")
+
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message
-                console.log(error);
-                toast.error(errorCode)
+                toast.error("Could not sign in, check username and password and try again!")
             })
     }
 
@@ -37,8 +48,7 @@ const Register = () => {
         <main className="h-screen m-auto max-w-md flex justify-center items-center ">
 
             <Card>
-                <h1 className="text-2xl">Join Auth</h1>
-                <p className="my-5">Ready to join our website? Enter the details below to create an account and get started!</p>
+                <h1 className="text-2xl">Sign in</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <FormItem>
                         <FormLabel children="Email" />
@@ -56,18 +66,18 @@ const Register = () => {
                         {errors?.password?.type === "required" && <ErrorMessage children="Password is required" />}
                         {errors?.password?.type === "minLength" && <ErrorMessage children="Password should be atleast 6 characters" />}
                     </FormItem>
-                    <Button type="submit" children="Register" block />
+                    <Button type="submit" children="Login" block />
                 </form>
-                <p className="my-5 text-center text-gray-600 text-sm">or register with a social profile</p>
+                <p className="my-5 text-center text-gray-600 text-sm">or continue with a social profile</p>
                 <div className="text-center my-5">
                     Socials
                 </div>
                 <hr />
-                <p className="mt-5 text-gray-700 text-sm text-center">Already have an account? Sign in <Link className="text-blue-600 font-semibold hover:underline underline-offset-2" to="/login">here</Link></p>
+                <p className="mt-5 text-gray-700 text-sm text-center">Don't have an account? Register <Link className="text-blue-600 font-semibold hover:underline underline-offset-2" to="/register">here</Link></p>
 
             </Card>
         </main >
     )
 }
 
-export default Register;
+export default Login;

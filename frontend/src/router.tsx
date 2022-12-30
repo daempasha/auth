@@ -1,4 +1,6 @@
 import ProtectedRoute from "@components/ProtectedRoute";
+import Home from "@pages/Home";
+import Login from "@pages/Login";
 import Register from "@pages/Register";
 import {
     createBrowserRouter,
@@ -7,11 +9,11 @@ import {
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <ProtectedRoute page={<div>Hello world!</div>} />,
+        element: <ProtectedRoute page={<Home />} />,
     },
     {
         path: "/login",
-        element: <Register />,
+        element: <Login />,
     },
     {
         path: "/register",
