@@ -8,7 +8,7 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { app } from "@firebase";
 import { ErrorMessage } from "@components/ErrorMessage";
 import { toast } from "react-hot-toast"
-const Login = () => {
+const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (values: FieldValues) => {
@@ -57,4 +57,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Register;
