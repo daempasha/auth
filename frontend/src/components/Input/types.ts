@@ -2,6 +2,7 @@ import { UseFormRegister, FieldValues } from "react-hook-form";
 
 interface Validation {
     [key: string]: any;
+    minLength?: number;
     required?: boolean;
     pattern?: {
         value: RegExp

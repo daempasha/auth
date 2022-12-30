@@ -40,14 +40,16 @@ const Login = () => {
                     <Input label="email" register={register} validation={{
                         required: true,
                         validate: validateEmail
-                    }} placeholder="e.g. email@example.com" />
+                    }} isError={errors.email ? true : false} placeholder="e.g. email@example.com" />
                     {errors?.email?.type === "required" && <ErrorMessage children="Email is required" />}
                     {errors?.email?.type === "validate" && <ErrorMessage children="Email supplied is not a valid format" />}
 
                 </FormItem>
                 <FormItem>
                     <FormLabel children="Password" />
-                    <Input type="password" label="password" register={register} placeholder="" />
+                    <Input isError={errors.password ? true : false} type="password" label="password" register={register} validation={{ minLength: 6, required: true }} placeholder="" />
+                    {errors?.password?.type === "required" && <ErrorMessage children="Password is required" />}
+                    {errors?.password?.type === "minLength" && <ErrorMessage children="Password should be atleast 6 characters" />}
                 </FormItem>
                 <Button type="submit" children="Register" />
             </Card>
