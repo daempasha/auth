@@ -8,8 +8,9 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { app } from "@firebase";
 import { ErrorMessage } from "@components/ErrorMessage";
 import { toast } from "react-hot-toast"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (values: FieldValues) => {
@@ -20,13 +21,14 @@ const Register = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(userCredential)
+                toast.success("Successfully registered user!")
+                navigate("/login")
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message
                 console.log(error);
-                toast.error(errorCode)
+                toast.error("Could not register user!")
             })
     }
 
