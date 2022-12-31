@@ -3,7 +3,7 @@ import { useUser } from "@hooks";
 
 const Navbar = () => {
     const { auth } = useUser();
-    return <nav className="m-5">
+    return <nav className="m-5 flex justify-end">
 
         {auth?.currentUser &&
             <Button onClick={() => auth.signOut()}>Sign out</Button>
